@@ -1,11 +1,14 @@
 package models;
 
+import java.util.ArrayList;
+
 public class Student {
     private final String ulearnID;
     private final String email;
     private final String firstName;
     private final String lastName;
     private final Group group;
+    private ArrayList<Section> course;
 
     public Student(String firstName, String lastName, Group group, String email, String ulearnID) {
         this.email = email;
@@ -19,4 +22,8 @@ public class Student {
     public String getEmail(){ return email; }
     public String getFirstName(){ return firstName; }
     public String getLastName(){ return lastName; }
+    public Group getGroup(){ return group; }
+    public void addSection(Section section){
+        course.add(section);
+    }
 }

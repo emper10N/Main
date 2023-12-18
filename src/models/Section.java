@@ -10,4 +10,11 @@ public class Section {
         this.id = id;
         this.name = name;
     }
+
+    public void addExercise(Exercise exercise){
+        exercises.add(exercise);
+    }
+
+    public String getName() { return name; }
+    public String getId() { return id; }
 }

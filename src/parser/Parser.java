@@ -9,6 +9,7 @@ import org.apache.poi.ss.usermodel.Row;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.util.Iterator;
+import java.util.Objects;
 
 public class Parser {
     public static String parse(String filename) {
@@ -26,9 +27,16 @@ public class Parser {
             while (rows.hasNext()) {
                 row = (XSSFRow) rows.next();
 
-                for(int i=2; i<row.getLastCellNum(); i++) {
+                for(int i=0; i<row.getLastCellNum(); i++) {
                     cell = row.getCell(i, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
-                    result.append(cell.toString()).append(" ");
+                    if (Objects.equals(cell.toString(), "")){
+                        result.append("\t").append("|");
+                        continue;
+                    }
+                    if (cell.toString().contains("Максимум:")){
+                        break;
+                    }
+                    result.append(cell.toString()).append("|");
                 }
                 result.append("\n");
             }
@@ -36,6 +44,6 @@ public class Parser {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return result.toString();
+        return result.toString().replace("|Упр: ", "|");
     }
 }
