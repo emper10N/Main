@@ -1,52 +1,41 @@
 package parser;
 
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.CellType;
-import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.xssf.usermodel.XSSFCell;
+import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.apache.poi.ss.usermodel.Row;
 
 import java.io.FileInputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import java.util.Iterator;
 
 public class Parser {
     public static String parse(String filename) {
-        String result = "";
-        InputStream inputStream = null;
-        XSSFWorkbook workBook = null;
+        StringBuilder result = new StringBuilder();
         try {
-            inputStream = new FileInputStream(filename);
-            workBook = new XSSFWorkbook(inputStream);
-        } catch (IOException e) {
+            InputStream ExcelFileToRead = new FileInputStream(filename);
+            XSSFWorkbook wb = new XSSFWorkbook(ExcelFileToRead);
+
+            XSSFSheet sheet = wb.getSheetAt(0);
+            XSSFRow row;
+            XSSFCell cell;
+
+            Iterator<Row> rows = sheet.rowIterator();
+
+            while (rows.hasNext()) {
+                row = (XSSFRow) rows.next();
+
+                for(int i=2; i<row.getLastCellNum(); i++) {
+                    cell = row.getCell(i, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
+                    result.append(cell.toString()).append(" ");
+                }
+                result.append("\n");
+            }
+
+        } catch (Exception e) {
             e.printStackTrace();
         }
-        XSSFSheet sheet = workBook.getSheetAt(0);
-        Iterator<Row> it = sheet.iterator();
-        while (it.hasNext()) {
-            Row row = it.next();
-            Iterator<Cell> cells = row.iterator();
-            while (it.hasNext()) {
-                Cell cell = cells.next();
-                CellType cellType = cell.getCellType();
-                switch (cellType) {
-                    case STRING:
-                        result += cell.getStringCellValue() + " = ";
-                        break;
-                    case NUMERIC:
-                        result += " [" + cell.getNumericCellValue() + "] ";
-                        break;
-                    case FORMULA:
-                        result += " [" + cell.getCellFormula() + "] ";
-                    default:
-                        result += " | ";
-                        break;
-                }
-            }
-            result += "\n";
-        }
-
-        return result;
+        return result.toString();
     }
 }

@@ -6,10 +6,14 @@ public class Exercise {
     public Integer points;
     public final Integer maxPoints;
 
-    public Exercise(String name, Integer maxPoints, String id){
+    public final String type;
+
+    public Exercise(String name, Integer maxPoints, String id, Integer points, String type){
          this.name = name;
          this.maxPoints = maxPoints;
          this.id = id;
+         this.points = points;
+         this.type = type;
     }
 
 
