@@ -8,7 +8,7 @@ public class Student {
     private final String firstName;
     private final String lastName;
     private final Group group;
-    private ArrayList<Section> course;
+    private ArrayList<Section> course = new ArrayList<>();
 
     public Student(String firstName, String lastName, Group group, String email, String ulearnID) {
         this.email = email;

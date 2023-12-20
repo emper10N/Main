@@ -1,15 +1,20 @@
 import converter.Converter;
+import models.Student;
 import parser.Parser;
+
+import java.util.ArrayList;
 
 public class Main {
     public static void main(String[] args) {
         var str = Parser.parse("src/data/data.xlsx");
-        System.out.println(str);
-        var res = str.split("\n")[23];
-        System.out.println(Converter.getStudent(res).getGroup().getName());
-        var test = str.split("\n")[1];
-        System.out.println(Converter.getBadIndex(test));
-        var sections = str.split("\n")[0];
-        System.out.println(Converter.getAllSections(sections));
+        ArrayList<Student> students = Converter.convert(str);
+        for (Student student: students) {
+            System.out.println(student.getEmail());
+            System.out.println(student.getFirstName());
+            System.out.println(student.getLastName());
+            System.out.println(student.getGroup().getName());
+            System.out.println(student.getUlearnID());
+            System.out.println("\n");
+        }
     }
 }
