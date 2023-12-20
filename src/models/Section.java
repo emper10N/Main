@@ -17,4 +17,5 @@ public class Section {
 
     public String getName() { return name; }
     public String getId() { return id; }
+    public ArrayList<Exercise> getExercises() { return this.exercises; }
 }

@@ -7,6 +7,7 @@ import models.Student;
 
 import java.util.ArrayList;
 import java.util.Objects;
+import java.util.UUID;
 
 public class Converter {
 
@@ -53,7 +54,7 @@ public class Converter {
             Student student = Converter.getStudent(res[i]);
             int value = 0;
             for (int j = 0; j < sections.size(); j++) {
-                Section section = new Section(sections.get(j), Integer.toString(sections.get(j).hashCode()));
+                Section section = new Section(sections.get(j), String.valueOf(UUID.randomUUID()));
                 for (int k = value; k < exercises.size()-1; k++) {
                     String name = res[1].split("\\|")[exercises.get(k)];
                     if (Objects.equals(name, "ДЗ")){
@@ -64,12 +65,12 @@ public class Converter {
                         type = "HOMEWORK";
                     }
                     if (exercises.get(k) + 1 == exercises.get(k+1)){
-                        Exercise exercise = new Exercise(name ,Integer.toString(name.hashCode()),
+                        Exercise exercise = new Exercise(name ,String.valueOf(UUID.randomUUID()),
                                 Double.parseDouble(res[i].split("\\|")[exercises.get(k)]), type);
                         section.addExercise(exercise);
                     } else {
                         value = k+1;
-                        Exercise exercise = new Exercise(name ,Integer.toString(name.hashCode()),
+                        Exercise exercise = new Exercise(name ,String.valueOf(UUID.randomUUID()),
                                 Double.parseDouble(res[i].split("\\|")[exercises.get(k)]), type);
                         section.addExercise(exercise);
                         break;

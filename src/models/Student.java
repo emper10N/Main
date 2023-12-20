@@ -26,4 +26,5 @@ public class Student {
     public void addSection(Section section){
         course.add(section);
     }
+    public ArrayList<Section> getSections() { return course; }
 }
