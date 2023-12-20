@@ -9,5 +9,7 @@ public class Main {
         System.out.println(Converter.getStudent(res).getGroup().getName());
         var test = str.split("\n")[1];
         System.out.println(Converter.getBadIndex(test));
+        var sections = str.split("\n")[0];
+        System.out.println(Converter.getAllSections(sections));
     }
 }

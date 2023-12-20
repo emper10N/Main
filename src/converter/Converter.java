@@ -25,4 +25,17 @@ public class Converter {
         }
         return result;
     }
+
+    public static  ArrayList<String> getAllSections(String row){
+        var res = row.split("\\|");
+        ArrayList<String> result = new ArrayList<>();
+        for (int i = 10; i < res.length; i++) {
+            res[i].replace("\t", "");
+            if (Objects.equals(res[i], "\t")){
+                continue;
+            }
+            result.add(res[i]);
+        }
+        return result;
+    }
 }
