@@ -51,17 +51,29 @@ public class Converter {
                 continue;
             }
             Student student = Converter.getStudent(res[i]);
+            int value = 0;
             for (int j = 0; j < sections.size(); j++) {
                 Section section = new Section(sections.get(j), Integer.toString(sections.get(j).hashCode()));
-                for (int k = 0; k < exercises.size()-1; k++) {
+                for (int k = value; k < exercises.size()-1; k++) {
                     String name = res[1].split("\\|")[exercises.get(k)];
+                    if (Objects.equals(name, "ДЗ")){
+                        continue;
+                    }
                     String type = "WORK";
                     if (name.contains("ДЗ")){
                         type = "HOMEWORK";
                     }
-                    Exercise exercise = new Exercise(name ,Integer.toString(name.hashCode()),
-                            Double.parseDouble(res[i].split("\\|")[exercises.get(k)]), type);
-                    section.addExercise(exercise);
+                    if (exercises.get(k) + 1 == exercises.get(k+1)){
+                        Exercise exercise = new Exercise(name ,Integer.toString(name.hashCode()),
+                                Double.parseDouble(res[i].split("\\|")[exercises.get(k)]), type);
+                        section.addExercise(exercise);
+                    } else {
+                        value = k+1;
+                        Exercise exercise = new Exercise(name ,Integer.toString(name.hashCode()),
+                                Double.parseDouble(res[i].split("\\|")[exercises.get(k)]), type);
+                        section.addExercise(exercise);
+                        break;
+                    }
                 }
                 student.addSection(section);
             }
